@@ -3,18 +3,20 @@ from fastapi.responses import RedirectResponse
 import json, pytz
 from datetime import datetime as dt
 
+GMTM3 = pytz.timezone("America/Sao_Paulo")
+
 app = FastAPI()
 
 connections = []
 
-@app.websocket("/ws-echo")
+@app.websocket("/ws/echo")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     connections.append(websocket.client)
     while True:
         try:
             data = await websocket.receive_json()
-            now = dt.now(tz=pytz.timezone("America/Sao_Paulo"))
+            now = dt.now(tz=GMTM3)
             value = list(data.values())[0]
             await websocket.send_json({now.isoformat(): value})
         except Exception as e:
