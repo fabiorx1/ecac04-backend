@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  fastapi:
+    container_name: ecac04-fastapi
+    build:
+      context: .
+      dockerfile: fastapi.Dockerfile
+    ports:
+      - "80:80"
