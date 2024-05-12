@@ -2,11 +2,12 @@ from fastapi import FastAPI, WebSocket
 from fastapi.responses import RedirectResponse
 import json, pytz
 from datetime import datetime as dt
+from src.information import fourier_router
 
 GMTM3 = pytz.timezone("America/Sao_Paulo")
 
 app = FastAPI()
-
+app.include_router(fourier_router)
 connections = []
 
 @app.websocket("/ws/echo")
